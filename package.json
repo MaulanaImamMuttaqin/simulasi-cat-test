@@ -1,0 +1,18 @@
+{
+  "name": "tailwind_v3_postcss",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "postcss tailwind.css -o ./style/styles.css --watch --verbose",
+    "prod": "postcss --env production tailwind.css -o ./style/styles.css --verbose"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.2",
+    "postcss-cli": "^9.1.0",
+    "tailwindcss": "^3.0.15"
+  }
+}
