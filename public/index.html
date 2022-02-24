@@ -10,9 +10,88 @@
 </head>
 
 <body>
-    <div class="h-screen center border border-black bg-blue-300 text-3xl font-bold ">
-        Maulana Imam Muttaqin
+    <div id="test" class="h-screen w-screen center bg-gray-200">
+        <div
+            class="h-[550px] w-[900px] flex flex-col justify-center items-center border border-gray-300 relative rounded-lg shadow-xl bg-white">
+            <div id="nth_question"
+                class="absolute top-0 left-0 px-5 py-2 text-3xl font-semibold border border-gray-300 rounded-lg m-3">
+                0
+            </div>
+            <div id="timer"
+                class="absolute top-0 right-0 px-5 py-2 text-3xl font-semibold border border-gray-300 rounded-lg m-3">
+            </div>
+            <div id="soal" class="flex mb-10 gap-2 ">
+                <div class="h-32 w-20 border border-gray-400 rounded-lg overflow-hidden">
+                    <p class="numbers text-6xl border-b border-gray-400 h-4/5 center font-semibold">0</p>
+                    <p class="text-lg h-1/5 center ">a</p>
+                </div>
+                <div class="h-32 w-20 border border-gray-400 rounded-lg overflow-hidden">
+                    <p class="numbers text-6xl border-b border-gray-400 h-4/5 center font-semibold">0</p>
+                    <p class="text-lg h-1/5 center ">b</p>
+                </div>
+                <div class="h-32 w-20 border border-gray-400 rounded-lg overflow-hidden">
+                    <p class="numbers text-6xl border-b border-gray-400 h-4/5 center font-semibold">0</p>
+                    <p class="text-lg h-1/5 center ">c</p>
+                </div>
+                <div class="h-32 w-20 border border-gray-400 rounded-lg overflow-hidden">
+                    <p class="numbers text-6xl border-b border-gray-400 h-4/5 center font-semibold">0</p>
+                    <p class="text-lg h-1/5 center ">d</p>
+                </div>
+                <div class="h-32 w-20 border border-gray-400 rounded-lg overflow-hidden">
+                    <p class="numbers text-6xl border-b border-gray-400 h-4/5 center font-semibold">0</p>
+                    <p class="text-lg h-1/5 center ">e</p>
+                </div>
+            </div>
+
+            <div id="start-test" class="">
+                <button
+                    class="px-10 py-2 border border-gray-400 rounded-lg bg-blue-500 font-bold text-white hover:bg-blue-600 transition"
+                    onclick="startTest()">
+                    MULAI TES
+                </button>
+            </div>
+
+            <div id="pertanyaan" class="flex flex-col items-center hidden">
+                <div class="question w-32 h-12 border border-gray-400 rounded-lg center text-3xl mb-5">0000</div>
+                <div id="options" class="border border-gray-400 flex gap-7 justify-center p-2 px-5 ">
+                    <div class="flex flex-col text-center font-semibold">
+                        <input class="questionOptions hover:cursor-pointer hover:bg-blue-400" type="radio" id="answer"
+                            name="answer" value="">
+                        <p>a</p>
+                    </div>
+                    <div class="flex flex-col text-center font-semibold">
+                        <input class="questionOptions hover:cursor-pointer" type="radio" id="answer" name="answer"
+                            value="">
+                        <p>b</p>
+                    </div>
+                    <div class="flex flex-col text-center font-semibold">
+                        <input class="questionOptions hover:cursor-pointer" type="radio" id="answer" name="answer"
+                            value="">
+                        <p>c</p>
+                    </div>
+                    <div class="flex flex-col text-center font-semibold">
+                        <input class="questionOptions hover:cursor-pointer" type="radio" id="answer" name="answer"
+                            value="">
+                        <p>d</p>
+                    </div>
+                    <div class="flex flex-col text-center font-semibold">
+                        <input class="questionOptions hover:cursor-pointer" type="radio" id="answer" name="answer"
+                            value="">
+                        <p>e</p>
+                    </div>
+                </div>
+            </div>
+            <div id="message" class="hidden text-xl text-center m-5">
+                <p>Tes sudah selesai</p>
+                <p>Terima Kasih :)</p>
+            </div>
+        </div>
+
+
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+        integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+    <script src="scripts.js"></script>
 </body>
 
 </html>
