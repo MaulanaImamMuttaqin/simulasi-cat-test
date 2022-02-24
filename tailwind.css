@@ -5,3 +5,9 @@
 .center{
     @apply flex justify-center items-center
 }
+.numbers-container{
+    @apply h-32 w-20 border border-gray-400 rounded-lg overflow-hidden text-center
+}
+.numbers{
+    @apply text-6xl border-b border-gray-400 h-4/5 center font-semibold
+}

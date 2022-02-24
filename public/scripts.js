@@ -18,6 +18,13 @@ $(document).ready(() => {
     $("input[name='answer']").each(() => {
         this.addEventListener("click", onClickRadioButton)
     })
+
+    // $("#test").html(`
+    // <div class="h-32 w-20 border border-gray-400 rounded-lg overflow-hidden">
+    //     <p class="numbers text-6xl border-b border-gray-400 h-4/5 center font-semibold">${3}</p>
+    //     <p class="text-lg h-1/5 center ">a</p>
+    // </div>
+    // `)
 });
 
 // fungsi untuk mengatur konfigurasi awal dari test
@@ -63,7 +70,6 @@ const startTest = () => {
 
     $("#pertanyaan").removeClass("hidden")
     $("#start-test").addClass("hidden")
-
 }
 
 const TestFinish = () => {
@@ -89,7 +95,6 @@ const onClickRadioButton = (e) => {
     setQuestion()
 
     // acak pertanyaan yang baru
-
 }
 const storeScore = () => {
     localStorage.setItem("score", JSON.stringify(score))
@@ -165,6 +170,15 @@ const convertHMS = (value) => {
     return result
 }
 
+// const renderNumberContainers = () => {
+//     let numberContainer = `
+//         <div class="numbers-container">
+//             <p class="numbers ">0</p>
+//             <p>a</p>
+//         </div>
+//     `
+//     $("#soal").append($(numberContainer))
+// }
 
 String.prototype.shuffle = function () {
     var a = this.split(""),
