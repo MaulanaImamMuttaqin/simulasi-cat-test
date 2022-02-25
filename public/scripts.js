@@ -14,31 +14,28 @@ let score = {
 $(document).ready(() => {
     // mengatur soal
     setTestConfiguration()
+
     // kasih event ke radio button kalau ditekan
     $("input[name='answer']").each(() => {
         this.addEventListener("click", onClickRadioButton)
     })
-
-    // $("#test").html(`
-    // <div class="h-32 w-20 border border-gray-400 rounded-lg overflow-hidden">
-    //     <p class="numbers text-6xl border-b border-gray-400 h-4/5 center font-semibold">${3}</p>
-    //     <p class="text-lg h-1/5 center ">a</p>
-    // </div>
-    // `)
 });
 
 // fungsi untuk mengatur konfigurasi awal dari test
 const setTestConfiguration = () => {
-
+    // konfigurasi untuk menentukan gmana bentuk tesnya
     let TestConfiguration = {
         questionTotal: 2,
         testDuration: 15,
-        numbersDigit: 5,
+        numbersDigit: 7,
         test_id: "",
     }
 
     // menghasilkan kumpulan angka n digits dan memasukan ke dalam variable question_list
-    numbersGenerator(TestConfiguration.questionTotal, TestConfiguration.numbersDigit)
+    question_list = numbersGenerator(TestConfiguration)
+
+    // merender html container buat angka dan pilihan jawaban
+    setNumberContainerAndChoices(TestConfiguration)
 
     //durasi test
     testDuration = TestConfiguration.testDuration;
@@ -48,17 +45,54 @@ const setTestConfiguration = () => {
     renderTimer(timer)
 }
 
-const numbersGenerator = (total, digits) => {
-    while (question_list.length < total) {
-        let number = []
-        while (number.length < digits) {
-            let digits = String(Math.floor(Math.random() * 10));
-            if (!number.includes(digits)) number.push(digits)
-        }
-        console.log(number)
-        question_list.push(number.join(""))
+
+const setNumberContainerAndChoices = ({ numbersDigit }) => {
+    for (let i = 0; i < numbersDigit; i++) {
+        renderNumberContainers((i + 10).toString(36))
+        renderChoicesContainer((i + 10).toString(36))
     }
 }
+
+const renderChoicesContainer = (choices) => {
+    let choicesContainer = `
+        <div class="flex flex-col text-center font-semibold">
+            <input class="questionChoices hover:cursor-pointer" type="radio" id="answer" name="answer"
+                value="">
+            <p>${choices}</p>
+        </div>
+    `
+    $("#choices").append($(choicesContainer))
+}
+
+
+const renderNumberContainers = (choices) => {
+    let numberContainer = `
+        <div class="numbers-container">
+            <p class="numbers ">0</p>
+            <p>${choices}</p>
+        </div>
+    `
+    $("#soal").append($(numberContainer))
+}
+
+const numbersGenerator = ({ questionTotal, numbersDigit }) => {
+    let questions = []
+    while (questions.length < questionTotal) {
+        let number = []
+        while (number.length < numbersDigit) {
+            let numbersDigit = String(Math.floor(Math.random() * 10));
+            if (!number.includes(numbersDigit)) number.push(numbersDigit)
+        }
+        console.log(number)
+        questions.push(number.join(""))
+    }
+
+    return questions
+}
+
+
+
+
 // fungsi untuk memulai test
 const startTest = () => {
     setNumbers()
@@ -72,6 +106,8 @@ const startTest = () => {
     $("#start-test").addClass("hidden")
 }
 
+
+// fungsi untuk menghentikan test
 const TestFinish = () => {
     clearInterval(interval)
     console.log(score)
@@ -80,6 +116,9 @@ const TestFinish = () => {
     $("#pertanyaan").addClass("hidden")
 }
 
+const uploadResult = () => { }
+
+// fungsi untuk memberikan event listener ke radio button
 const onClickRadioButton = (e) => {
     let value = e.target.value
     if (value === undefined || value === "") return null
@@ -91,16 +130,18 @@ const onClickRadioButton = (e) => {
     }
 
     e.target.checked = false
-    storeScore()
+    storeScore(score)
     setQuestion()
 
     // acak pertanyaan yang baru
 }
-const storeScore = () => {
-    localStorage.setItem("score", JSON.stringify(score))
+
+// fungsi untuk menyimpan data ke dalam browser localstorage
+const storeScore = (data) => {
+    localStorage.setItem("score", JSON.stringify(data))
 }
 
-
+// fungsi untuk mengacak angka untuk pertanyaan selanjutnya
 const setQuestion = () => {
     // cetak pertanyaan secara random di kotak pertanyaan
 
@@ -109,18 +150,20 @@ const setQuestion = () => {
     $(".question").html(currentQuestion)
 }
 
+
+// fungsi untuk mencetak angka dan value options ke html 
 const setNumbers = () => {
     // mencetak angka dari soal ke html dan menset nilai optionsnya
     $(".numbers").each((i, obj) => {
         let value = question_list[nth_question].split("")
         obj.innerHTML = value[i]
     })
-    $(".questionOptions").each((i, obj) => {
+    $(".questionChoices").each((i, obj) => {
         obj.value = question_list[nth_question].split("")[i]
     })
 }
 
-
+// fungsi untuk memulai timer 
 const startTimer = () => {
     started = true
     interval = setInterval(() => {
@@ -130,6 +173,8 @@ const startTimer = () => {
     }, 1000)
 
 }
+
+// fungsi untuk merender angka soal baru kalau timer sudah habis
 const renderNewNumbers = () => {
     resetTimer()
     if (!(nth_question >= (question_list.length - 1))) {
@@ -137,7 +182,6 @@ const renderNewNumbers = () => {
         renderNthNumbers(nth_question)
         setQuestion()
         setNumbers()
-
     } else {
         TestFinish()
 
@@ -145,22 +189,26 @@ const renderNewNumbers = () => {
 }
 
 
-
+// fungsi untuk mereset timer
 const resetTimer = () => {
     timer = testDuration
 }
 
+// fungsi untuk mencetak tinggal berapa soal lagi yang perlu di selesaikan
 const renderNthNumbers = (n) => {
     $("#nth_question").html(question_list.length - n)
 }
-// tambah method baru di obj String untuk mengacak karakter dalam string dan kurangin satu karakter
 
+
+// fungsi untuk mencetak waktu dari timer ke html
 const renderTimer = (time) => {
 
     let timeHMS = convertHMS(time)
     $("#timer").html(timeHMS)
 }
 
+
+// fungsi untuk mengubah waktu detik ke format jam:menit:detik
 const convertHMS = (value) => {
 
     var date = new Date(null);
@@ -170,16 +218,8 @@ const convertHMS = (value) => {
     return result
 }
 
-// const renderNumberContainers = () => {
-//     let numberContainer = `
-//         <div class="numbers-container">
-//             <p class="numbers ">0</p>
-//             <p>a</p>
-//         </div>
-//     `
-//     $("#soal").append($(numberContainer))
-// }
 
+// tambah method baru di obj String untuk mengacak karakter dalam string dan kurangin satu karakter
 String.prototype.shuffle = function () {
     var a = this.split(""),
         n = a.length;
