@@ -13,7 +13,7 @@ let score = {
 
 $(document).ready(() => {
     // mengatur soal
-    setTestConfiguration()
+    preTestConfiguration()
 
     // kasih event ke radio button kalau ditekan
     $("input[name='answer']").each(() => {
@@ -22,7 +22,7 @@ $(document).ready(() => {
 });
 
 // fungsi untuk mengatur konfigurasi awal dari test
-const setTestConfiguration = () => {
+const preTestConfiguration = () => {
     // konfigurasi untuk menentukan gmana bentuk tesnya
     let TestConfiguration = {
         questionTotal: 2,
